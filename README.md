@@ -15,7 +15,7 @@
     <img src="https://img.shields.io/npm/l/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm license" />
   </a>
   <br />
-  <a href="https://github.com/mgcrea/metro-plugin-linked-packages/actions/workflows/main.yml">
+  <a href="https://github.com/mgcrea/metro-plugin-linked-packages/actions/workflows/main.yaml">
     <img src="https://img.shields.io/github/actions/workflow/status/mgcrea/metro-plugin-linked-packages/main.yml?style=for-the-badge&branch=master" alt="build status" />
   </a>
   <a href="https://depfu.com/github/mgcrea/metro-plugin-linked-packages">
