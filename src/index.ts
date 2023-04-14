@@ -1,4 +1,5 @@
 import type { MetroConfig } from "metro-config";
+import exclusionList from "metro-config/src/defaults/exclusionList";
 import { readFileSync, realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { listSymlinksSync } from "./utils";
@@ -31,7 +32,14 @@ export const getLinkedPackagesConfig = (dirname: string): MetroConfig => {
     soFar[moduleName] = realpathSync(resolve(modulesDirectory, moduleName));
     return soFar;
   }, {});
+
   const watchFolders = Object.values(extraPackages);
+
+  const extraPackagesModules = linkedDependencies.reduce<RegExp[]>((soFar, moduleName) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return soFar.concat([new RegExp(`${resolve(extraPackages[moduleName]!, "node_modules")}/.*`)]);
+  }, []);
+  const blockList = exclusionList(extraPackagesModules);
 
   const resolveModulePath = (module: string) => resolve(modulesDirectory, module);
   const extraNodeModules = linkedPeerDependencies.reduce<Record<string, string>>(
@@ -46,6 +54,7 @@ export const getLinkedPackagesConfig = (dirname: string): MetroConfig => {
     watchFolders,
     resolver: {
       extraNodeModules,
+      blockList,
     },
   };
 };
