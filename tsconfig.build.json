@@ -1,11 +1,6 @@
 {
-  "extends": [
-    "@tsconfig/node-lts/tsconfig.json",
-    "@tsconfig/strictest/tsconfig.json",
-    "@tsconfig/esm/tsconfig.json"
-  ],
+  "extends": ["@tsconfig/node-lts", "@tsconfig/strictest", "@tsconfig/esm"],
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
     "declaration": true,
     "resolveJsonModule": true,
     "rootDir": "./src",
