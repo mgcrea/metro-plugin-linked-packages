@@ -1,0 +1,48 @@
+{
+  "name": "@mgcrea/metro-plugin-linked-packages",
+  "version": "0.0.0",
+  "description": "Automatically resolve linked packages in your react-native project",
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx --inspect --watch src/index.ts",
+    "build": "tsup src/index.ts --format cjs,esm --sourcemap --dts --clean",
+    "buildDebug": "rimraf dist/*; tsc --project tsconfig.build.json --sourcemap",
+    "preview": "node --experimental-specifier-resolution=node --no-warnings dist/index.js",
+    "prettify": "prettier --write src/ test/",
+    "lint": "eslint src/ test/",
+    "prettycheck": "prettier --check src/ test/",
+    "typecheck": "tsc --noEmit",
+    "spec": "vitest --run",
+    "test": "npm run lint && npm run prettycheck && npm run typecheck && npm run spec",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@mgcrea/eslint-config-node": "^0.2.3",
+    "@tsconfig/esm": "^1.0.2",
+    "@tsconfig/node-lts": "^18.12.1",
+    "@tsconfig/strictest": "^2.0.0",
+    "@types/node": "^18.15.11",
+    "eslint": "^8.37.0",
+    "prettier": "^2.8.7",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "rimraf": "^4.4.1",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.3",
+    "vite-tsconfig-paths": "^4.0.8",
+    "vitest": "^0.29.8"
+  }
+}
