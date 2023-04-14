@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import * as module from "..";
+import * as module from "../src";
 
 describe("module", () => {
   test("exports", () => {
