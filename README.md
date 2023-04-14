@@ -42,6 +42,7 @@ pnpm add  @mgcrea/metro-plugin-linked-packages  --save-dev
 
 ```tsx
 // metro.config.js
+const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
 const { getLinkedPackagesConfig } = require("@mgcrea/metro-plugin-linked-packages");
 
 const config = {};
