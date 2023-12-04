@@ -22,7 +22,6 @@
     "start": "tsx src/index.ts",
     "dev": "tsx --inspect --watch src/index.ts",
     "build": "tsup src/index.ts --format cjs,esm --sourcemap --dts --clean",
-    "buildDebug": "rimraf dist/*; tsc --project tsconfig.build.json --sourcemap",
     "preview": "node --experimental-specifier-resolution=node --no-warnings dist/index.js",
     "prettify": "prettier --write src/ test/",
     "lint": "eslint src/ test/",
@@ -33,20 +32,19 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@mgcrea/eslint-config-node": "^0.3.0",
-    "@tsconfig/esm": "^1.0.2",
-    "@tsconfig/node-lts": "^18.12.1",
-    "@tsconfig/strictest": "^2.0.0",
-    "@types/node": "^18.15.11",
-    "eslint": "^8.38.0",
-    "metro-config": "^0.76.1",
-    "prettier": "^2.8.7",
-    "prettier-plugin-organize-imports": "^3.2.2",
-    "rimraf": "^5.0.0",
-    "tsup": "^6.7.0",
-    "tsx": "^3.12.6",
-    "typescript": "^5.0.4",
-    "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.30.1"
+    "@mgcrea/eslint-config-node": "^0.8.2",
+    "@tsconfig/node-lts": "^18.12.5",
+    "@tsconfig/strictest": "^2.0.2",
+    "@types/node": "^18.18.3",
+    "eslint": "^8.50.0",
+    "metro-config": "^0.79.1",
+    "prettier": "^3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.3",
+    "rimraf": "^5.0.5",
+    "tsup": "^7.2.0",
+    "tsx": "^3.13.0",
+    "typescript": "^5.2.2",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.6"
   }
 }

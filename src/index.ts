@@ -12,11 +12,11 @@ export const getLinkedPackagesConfig = (dirname: string): MetroConfig => {
     filter: (item) => item.name.startsWith("@"),
   });
 
-  const linkedPeerDependencies: string[] = [];
+  const linkedPeerDependencies: string[] = ["@babel/runtime"];
   for (const linkedDependency of linkedDependencies) {
     const packageContents = readFileSync(
       resolve(modulesDirectory, linkedDependency, "package.json"),
-      "utf-8"
+      "utf-8",
     );
     const packageJson = JSON.parse(packageContents);
     if (packageJson.peerDependencies) {
@@ -47,7 +47,7 @@ export const getLinkedPackagesConfig = (dirname: string): MetroConfig => {
       soFar[moduleName] = resolveModulePath(moduleName);
       return soFar;
     },
-    { ...extraPackages }
+    { ...extraPackages },
   );
 
   return {
