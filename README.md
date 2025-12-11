@@ -26,7 +26,14 @@
 
 ## Features
 
-Automatically resolve and hoist your linked packages peer dependencies in your react-native projects.
+Automatically resolve linked packages in your React Native projects. Works with **pnpm**, **yarn**, and **npm**.
+
+- Detects `link:` and `file:` protocol dependencies
+- Scans `package.json` (dependencies, devDependencies, overrides, resolutions)
+- Scans `pnpm-workspace.yaml` overrides
+- Resolves symlinks to real paths (important for pnpm global links)
+- Automatically hoists peer dependencies from linked packages
+- Configures Metro's `watchFolders`, `extraNodeModules`, and `blockList`
 
 ## Install
 
@@ -35,12 +42,12 @@ npm install @mgcrea/metro-plugin-linked-packages --save-dev
 # or
 yarn add @mgcrea/metro-plugin-linked-packages --dev
 # or
-pnpm add  @mgcrea/metro-plugin-linked-packages  --save-dev
+pnpm add @mgcrea/metro-plugin-linked-packages --save-dev
 ```
 
 ## Quickstart
 
-```tsx
+```js
 // metro.config.js
 const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
 const { getLinkedPackagesConfig } = require("@mgcrea/metro-plugin-linked-packages");
@@ -53,6 +60,94 @@ module.exports = mergeConfig(
   config
 );
 ```
+
+## How It Works
+
+The plugin scans your project for linked packages defined via:
+
+- **package.json**: `dependencies`, `devDependencies`, `optionalDependencies` with `link:` or `file:` protocols
+- **package.json**: `pnpm.overrides`, `overrides` (npm), `resolutions` (yarn)
+- **pnpm-workspace.yaml**: `overrides` section
+
+For each linked package, it:
+
+1. Adds the package path to `watchFolders` for hot reloading
+2. Adds the package to `extraNodeModules` so Metro can resolve it
+3. Collects peer dependencies and adds them to `extraNodeModules`
+4. Blocks the linked package's `node_modules` to prevent duplicate dependencies
+
+## Options
+
+```ts
+type LinkedPackagesOptions = {
+  /** Explicitly specify linked packages (skips auto-detection) */
+  linkedPackages?: LinkedPackage[];
+  /** Additional peer dependencies to always include */
+  additionalPeerDependencies?: string[];
+  /** Include workspace packages (default: true) */
+  includeWorkspaces?: boolean;
+};
+```
+
+### Example with Options
+
+```js
+const { getLinkedPackagesConfig } = require("@mgcrea/metro-plugin-linked-packages");
+
+// Explicitly specify packages
+getLinkedPackagesConfig(__dirname, {
+  linkedPackages: [
+    { name: "my-package", path: "/path/to/my-package" },
+  ],
+});
+
+// Add extra peer dependencies
+getLinkedPackagesConfig(__dirname, {
+  additionalPeerDependencies: ["lodash", "moment"],
+});
+
+// Disable workspace package detection
+getLinkedPackagesConfig(__dirname, {
+  includeWorkspaces: false,
+});
+```
+
+## Exported Utilities
+
+The plugin also exports utility functions for advanced use cases:
+
+```ts
+import {
+  getLinkedPackagesConfig,
+  listLinkedPackages,
+  listWorkspacePackages,
+  listSymlinksSync,
+  detectPackageManager,
+} from "@mgcrea/metro-plugin-linked-packages";
+
+// List all linked packages in a directory
+const linked = listLinkedPackages("/path/to/project");
+// => [{ name: "@scope/pkg", path: "/real/path/to/pkg" }, ...]
+
+// List workspace packages
+const workspaces = listWorkspacePackages("/path/to/project");
+
+// Detect package manager
+const pm = detectPackageManager("/path/to/project");
+// => "pnpm" | "yarn" | "npm"
+```
+
+## pnpm Setup Example
+
+With pnpm, you can link packages globally and reference them in `pnpm-workspace.yaml`:
+
+```yaml
+# pnpm-workspace.yaml
+overrides:
+  "@myorg/my-lib": link:../../../Library/pnpm/global/5/node_modules/@myorg/my-lib
+```
+
+The plugin will automatically detect these and configure Metro accordingly.
 
 ## Authors
 
