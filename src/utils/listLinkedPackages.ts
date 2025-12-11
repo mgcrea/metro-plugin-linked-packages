@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import type { LinkedPackage, PackageJson } from "../types";
 
@@ -15,7 +15,9 @@ const extractLinkedPackages = (
     if (LINK_PROTOCOL_REGEX.test(version)) {
       const relativePath = version.replace(LINK_PROTOCOL_REGEX, "");
       const absolutePath = resolve(dirname, relativePath);
-      linked.push({ name, path: absolutePath });
+      // Resolve symlinks to get the real path (important for pnpm global links)
+      const realPath = existsSync(absolutePath) ? realpathSync(absolutePath) : absolutePath;
+      linked.push({ name, path: realPath });
     }
   }
   return linked;

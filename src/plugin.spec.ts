@@ -42,9 +42,8 @@ describe("getLinkedPackagesConfig", () => {
     });
 
     expect(config.watchFolders).toContain(linkedPackageDir);
-    // Linked packages are not added to extraNodeModules since Metro can resolve them via node_modules
-    // Only peer dependencies are added to extraNodeModules
-    expect(config.resolver?.extraNodeModules).not.toHaveProperty("my-pkg");
+    // Linked packages are added to extraNodeModules when not resolvable via node_modules
+    expect(config.resolver?.extraNodeModules).toHaveProperty("my-pkg", linkedPackageDir);
   });
 
   it("should auto-detect link: dependencies from package.json", () => {
@@ -63,9 +62,10 @@ describe("getLinkedPackagesConfig", () => {
 
     const config = getLinkedPackagesConfig(testDir);
 
-    expect(config.watchFolders).toContain(linkedPackageDir);
-    // Linked packages are not added to extraNodeModules since Metro can resolve them via node_modules
-    expect(config.resolver?.extraNodeModules).not.toHaveProperty("linked-pkg");
+    // watchFolders contains the realpath-resolved path
+    expect(config.watchFolders?.length).toBe(1);
+    // Linked packages are added to extraNodeModules when not resolvable via node_modules
+    expect(config.resolver?.extraNodeModules).toHaveProperty("linked-pkg");
   });
 
   it("should collect peer dependencies from linked packages", () => {

@@ -57,10 +57,20 @@ const buildMetroConfig = (
   // Collect peer dependencies from all linked packages
   const peerDependencies = collectPeerDependencies(packages, additionalPeerDeps);
 
-  // Build extraNodeModules map for peer dependencies only
-  // (linked packages themselves are already resolvable via node_modules symlinks)
+  // Build extraNodeModules map
   const resolveModulePath = (moduleName: string) => resolve(modulesDirectory, moduleName);
   const extraNodeModules: Record<string, string> = {};
+
+  // Add linked packages to extraNodeModules only if they're not resolvable via node_modules
+  // (e.g., global pnpm links don't create symlinks in node_modules)
+  for (const pkg of packages) {
+    const nodeModulesPath = resolve(modulesDirectory, pkg.name);
+    if (!existsSync(nodeModulesPath)) {
+      extraNodeModules[pkg.name] = pkg.path;
+    }
+  }
+
+  // Add peer dependencies so linked packages can resolve them from the host project
   for (const moduleName of peerDependencies) {
     extraNodeModules[moduleName] = resolveModulePath(moduleName);
   }
