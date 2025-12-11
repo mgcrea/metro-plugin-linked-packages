@@ -44,14 +44,8 @@ const buildMetroConfig = (
 ): MetroConfig => {
   const modulesDirectory = resolve(dirname, "node_modules");
 
-  // Build extraPackages map (name -> absolute path)
-  const extraPackages: Record<string, string> = {};
-  for (const pkg of packages) {
-    extraPackages[pkg.name] = pkg.path;
-  }
-
-  // Watch folders for hot reloading
-  const watchFolders = Object.values(extraPackages);
+  // Watch folders for hot reloading linked package sources
+  const watchFolders = packages.map((pkg) => pkg.path);
 
   // Block list to prevent bundling linked packages' node_modules
   const blockListPatterns = packages.map((pkg) => {
@@ -63,9 +57,10 @@ const buildMetroConfig = (
   // Collect peer dependencies from all linked packages
   const peerDependencies = collectPeerDependencies(packages, additionalPeerDeps);
 
-  // Build extraNodeModules map
+  // Build extraNodeModules map for peer dependencies only
+  // (linked packages themselves are already resolvable via node_modules symlinks)
   const resolveModulePath = (moduleName: string) => resolve(modulesDirectory, moduleName);
-  const extraNodeModules: Record<string, string> = { ...extraPackages };
+  const extraNodeModules: Record<string, string> = {};
   for (const moduleName of peerDependencies) {
     extraNodeModules[moduleName] = resolveModulePath(moduleName);
   }
