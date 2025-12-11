@@ -1,9 +1,16 @@
 import type { MetroConfig } from "metro-config";
-import exclusionList from "metro-config/private/defaults/exclusionList";
 import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import type { LinkedPackage, LinkedPackagesOptions, PackageJson } from "./types";
 import { listLinkedPackages, listSymlinksSync, listWorkspacePackages } from "./utils";
+
+type ExclusionListFn = (additionalExclusions?: RegExp[]) => RegExp;
+
+// Handle both CJS and ESM module formats
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
+const exclusionListModule = require("metro-config/private/defaults/exclusionList");
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+const exclusionList: ExclusionListFn = exclusionListModule.default ?? exclusionListModule;
 
 const escapeRegExp = (string: string): string => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
