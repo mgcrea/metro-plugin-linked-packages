@@ -2,21 +2,21 @@
 
 <!-- markdownlint-disable MD033 -->
 <p align="center">
-  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-package">
-    <img src="https://img.shields.io/npm/v/@mgcrea/metro-plugin-linked-package.svg?style=for-the-badge" alt="npm version" />
+  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-packages">
+    <img src="https://img.shields.io/npm/v/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm version" />
   </a>
-  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-package">
-    <img src="https://img.shields.io/npm/dt/@mgcrea/metro-plugin-linked-package.svg?style=for-the-badge" alt="npm total downloads" />
+  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-packages">
+    <img src="https://img.shields.io/npm/dt/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm total downloads" />
   </a>
-  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-package">
-    <img src="https://img.shields.io/npm/dm/@mgcrea/metro-plugin-linked-package.svg?style=for-the-badge" alt="npm monthly downloads" />
+  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-packages">
+    <img src="https://img.shields.io/npm/dm/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm monthly downloads" />
   </a>
-  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-package">
-    <img src="https://img.shields.io/npm/l/@mgcrea/metro-plugin-linked-package.svg?style=for-the-badge" alt="npm license" />
+  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-packages">
+    <img src="https://img.shields.io/npm/l/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm license" />
   </a>
   <br />
-  <a href="https://github.com/mgcrea/metro-plugin-linked-package/actions/workflows/main.yaml">
-    <img src="https://img.shields.io/github/actions/workflow/status/mgcrea/metro-plugin-linked-package/main.yaml?style=for-the-badge&branch=main" alt="build status" />
+  <a href="https://github.com/mgcrea/metro-plugin-linked-packages/actions/workflows/main.yaml">
+    <img src="https://img.shields.io/github/actions/workflow/status/mgcrea/metro-plugin-linked-packages/main.yaml?style=for-the-badge&branch=main" alt="build status" />
   </a>
 </p>
 <!-- markdownlint-enable MD033 -->
