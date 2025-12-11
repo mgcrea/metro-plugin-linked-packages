@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { resolve } from "node:path";
-import type { LinkedPackage, PackageJson } from "../types";
+import { parse as parseYaml } from "yaml";
+import type { LinkedPackage, PackageJson, PnpmWorkspaceConfig } from "../types";
 
 const LINK_PROTOCOL_REGEX = /^(link:|file:)/;
 
@@ -64,6 +65,17 @@ export const listLinkedPackages = (dirname: string): LinkedPackage[] => {
   // Scan resolutions (yarn-specific)
   for (const pkg of extractLinkedPackages(packageJson.resolutions, dirname)) {
     addPackage(pkg);
+  }
+
+  // Scan pnpm-workspace.yaml overrides
+  const pnpmWorkspacePath = resolve(dirname, "pnpm-workspace.yaml");
+  if (existsSync(pnpmWorkspacePath)) {
+    const pnpmWorkspace = parseYaml(
+      readFileSync(pnpmWorkspacePath, "utf-8"),
+    ) as PnpmWorkspaceConfig;
+    for (const pkg of extractLinkedPackages(pnpmWorkspace.overrides, dirname)) {
+      addPackage(pkg);
+    }
   }
 
   return linked;

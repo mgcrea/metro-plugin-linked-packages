@@ -30,4 +30,5 @@ export type PackageJson = {
 
 export type PnpmWorkspaceConfig = {
   packages?: string[];
+  overrides?: Record<string, string>;
 };
