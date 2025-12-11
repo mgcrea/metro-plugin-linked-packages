@@ -6,6 +6,10 @@ describe("module", () => {
     expect(Object.keys(module)).toMatchInlineSnapshot(`
       [
         "getLinkedPackagesConfig",
+        "detectPackageManager",
+        "listLinkedPackages",
+        "listSymlinksSync",
+        "listWorkspacePackages",
       ]
     `);
   });

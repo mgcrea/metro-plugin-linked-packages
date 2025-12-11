@@ -8,7 +8,7 @@ export type ListSymlinksOptions = {
 
 export const listSymlinksSync = (
   directory: PathLike,
-  { depth = 0, filter }: ListSymlinksOptions
+  { depth = 0, filter }: ListSymlinksOptions,
 ): string[] => {
   const list = readdirSync(directory, { withFileTypes: true });
   const symlinks = list.filter((item) => item.isSymbolicLink()).map((item) => item.name);
@@ -17,7 +17,9 @@ export const listSymlinksSync = (
   }
   const subFolders = list.filter((item) => item.isDirectory() && (filter ? filter(item) : true));
   for (const folder of subFolders) {
-    const folderSymlinks = listSymlinksSync(`${directory}/${folder.name}`, { depth: depth - 1 });
+    const folderSymlinks = listSymlinksSync(`${String(directory)}/${folder.name}`, {
+      depth: depth - 1,
+    });
     symlinks.push(...folderSymlinks.map((item) => `${folder.name}/${item}`));
   }
   return symlinks;

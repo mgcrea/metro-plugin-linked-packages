@@ -1,6 +1,25 @@
 {
-  "extends": ["@tsconfig/node-lts/tsconfig.json", "@tsconfig/strictest/tsconfig.json"],
+  "$schema": "https://www.schemastore.org/tsconfig",
   "compilerOptions": {
+    // @tsconfig/node-lts (node24)
+    "lib": ["es2024", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator", "ESNext.Promise"],
+    "target": "es2024",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    // @tsconfig/strictest
+    "strict": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "isolatedModules": true,
+    // Custom settings
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "baseUrl": ".",
@@ -9,5 +28,5 @@
       "test/*": ["./test/*"]
     }
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "*.config.js"]
 }
