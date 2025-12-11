@@ -2,31 +2,30 @@
 
 <!-- markdownlint-disable MD033 -->
 <p align="center">
-  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-packages">
-    <img src="https://img.shields.io/npm/v/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm version" />
+  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-package">
+    <img src="https://img.shields.io/npm/v/@mgcrea/metro-plugin-linked-package.svg?style=for-the-badge" alt="npm version" />
   </a>
-  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-packages">
-    <img src="https://img.shields.io/npm/dt/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm total downloads" />
+  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-package">
+    <img src="https://img.shields.io/npm/dt/@mgcrea/metro-plugin-linked-package.svg?style=for-the-badge" alt="npm total downloads" />
   </a>
-  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-packages">
-    <img src="https://img.shields.io/npm/dm/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm monthly downloads" />
+  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-package">
+    <img src="https://img.shields.io/npm/dm/@mgcrea/metro-plugin-linked-package.svg?style=for-the-badge" alt="npm monthly downloads" />
   </a>
-  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-packages">
-    <img src="https://img.shields.io/npm/l/@mgcrea/metro-plugin-linked-packages.svg?style=for-the-badge" alt="npm license" />
+  <a href="https://www.npmjs.com/package/@mgcrea/metro-plugin-linked-package">
+    <img src="https://img.shields.io/npm/l/@mgcrea/metro-plugin-linked-package.svg?style=for-the-badge" alt="npm license" />
   </a>
   <br />
-  <a href="https://github.com/mgcrea/metro-plugin-linked-packages/actions/workflows/main.yaml">
-    <img src="https://img.shields.io/github/actions/workflow/status/mgcrea/metro-plugin-linked-packages/main.yaml?style=for-the-badge&branch=master" alt="build status" />
-  </a>
-  <a href="https://depfu.com/github/mgcrea/metro-plugin-linked-packages">
-    <img src="https://img.shields.io/depfu/dependencies/github/mgcrea/metro-plugin-linked-packages?style=for-the-badge" alt="dependencies status" />
+  <a href="https://github.com/mgcrea/metro-plugin-linked-package/actions/workflows/main.yaml">
+    <img src="https://img.shields.io/github/actions/workflow/status/mgcrea/metro-plugin-linked-package/main.yaml?style=for-the-badge&branch=main" alt="build status" />
   </a>
 </p>
-<!-- markdownlint-enable MD037 -->
+<!-- markdownlint-enable MD033 -->
 
 ## Features
 
-Automatically resolve linked packages in your React Native projects. Works with **pnpm**, **yarn**, and **npm**.
+A Metro plugin that enables seamless local development with symlinked libraries in React Native projects. It automatically configures Metro to properly resolve linked packages, avoiding common pitfalls like multiple React instances, missing peer dependencies, or broken hot reloading.
+
+Works with **pnpm**, **yarn**, and **npm**.
 
 - Detects `link:` and `file:` protocol dependencies
 - Scans `package.json` (dependencies, devDependencies, overrides, resolutions)
@@ -57,7 +56,7 @@ const config = {};
 module.exports = mergeConfig(
   getDefaultConfig(__dirname),
   getLinkedPackagesConfig(__dirname),
-  config
+  config,
 );
 ```
 
@@ -96,9 +95,7 @@ const { getLinkedPackagesConfig } = require("@mgcrea/metro-plugin-linked-package
 
 // Explicitly specify packages
 getLinkedPackagesConfig(__dirname, {
-  linkedPackages: [
-    { name: "my-package", path: "/path/to/my-package" },
-  ],
+  linkedPackages: [{ name: "my-package", path: "/path/to/my-package" }],
 });
 
 // Add extra peer dependencies
