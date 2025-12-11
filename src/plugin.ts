@@ -61,13 +61,10 @@ const buildMetroConfig = (
   const resolveModulePath = (moduleName: string) => resolve(modulesDirectory, moduleName);
   const extraNodeModules: Record<string, string> = {};
 
-  // Add linked packages to extraNodeModules only if they're not resolvable via node_modules
-  // (e.g., global pnpm links don't create symlinks in node_modules)
+  // Always add linked packages to extraNodeModules with their real paths
+  // Metro doesn't reliably follow pnpm's complex symlink chains
   for (const pkg of packages) {
-    const nodeModulesPath = resolve(modulesDirectory, pkg.name);
-    if (!existsSync(nodeModulesPath)) {
-      extraNodeModules[pkg.name] = pkg.path;
-    }
+    extraNodeModules[pkg.name] = pkg.path;
   }
 
   // Add peer dependencies so linked packages can resolve them from the host project
