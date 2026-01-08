@@ -110,7 +110,11 @@ export const getLinkedPackagesConfig = (
     if (packages.length === 0) {
       const modulesDirectory = resolve(dirname, "node_modules");
       if (existsSync(modulesDirectory)) {
-        const symlinks = listSymlinksSync(modulesDirectory, { depth: 1 });
+        const symlinks = listSymlinksSync(modulesDirectory, {
+          depth: 1,
+          // Exclude .bin directory which contains CLI executable symlinks, not packages
+          filter: (item) => item.name !== ".bin",
+        });
         for (const symlink of symlinks) {
           const symlinkPath = resolve(modulesDirectory, symlink);
           packages.push({
